@@ -10,14 +10,15 @@ import (
 type plugin struct {
 }
 
-func NewPlugin() plugins.Plugin {
+func New() plugins.Plugin {
 	return &plugin{}
 }
 
 func (p *plugin) Do(req goslash.SlashCommandRequest) goslash.SlashCommandMessage {
 	_, args := req.CmdArgs()
 
-	size := utf8.RuneCountInString(args[0])
+	text := "突然の" + args[0]
+	size := utf8.RuneCountInString(text)
 	header := ""
 	for i := 0; i < size+2; i++ {
 		header += "人"
@@ -30,11 +31,11 @@ func (p *plugin) Do(req goslash.SlashCommandRequest) goslash.SlashCommandMessage
 
 	reMessage := "＿" + header + "＿"
 	reMessage += "\n"
-	reMessage += "＞　" + args[0] + "　＜"
+	reMessage += "＞　" + text + "　＜"
 	reMessage += "\n"
 	reMessage += "￣Y" + fotter + "￣"
 
-	return goslash.NewMessage(reMessage)
+	return goslash.NewInChannelMessage(reMessage)
 }
 
 var _ plugins.Plugin = (*plugin)(nil)
