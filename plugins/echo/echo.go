@@ -16,7 +16,5 @@ func New() plugins.Plugin {
 
 func (p *plugin) Do(req goslash.SlashCommandRequest) goslash.SlashCommandMessage {
 	_, args := req.CmdArgs()
-	return goslash.NewMessage(
-		"Echo Message " + strings.Join(args, ""),
-	)
+	return goslash.NewInChannelMessage(strings.Join(args, ""))
 }
