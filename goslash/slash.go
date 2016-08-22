@@ -37,7 +37,8 @@ type SlashCommandMessage struct {
 
 func NewMessage(text string) SlashCommandMessage {
 	return SlashCommandMessage{
-		Text: text,
+		Text:        text,
+		Attachments: []Attachment{},
 	}
 }
 
@@ -45,6 +46,7 @@ func NewInChannelMessage(text string) SlashCommandMessage {
 	return SlashCommandMessage{
 		ResponseType: "in_channel",
 		Text:         text,
+		Attachments:  []Attachment{},
 	}
 }
 

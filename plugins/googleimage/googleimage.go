@@ -29,7 +29,7 @@ func (p *plugin) Do(req goslash.SlashCommandRequest) goslash.SlashCommandMessage
 	_, args := req.CmdArgs()
 	message := strings.Join(args, " ")
 
-	query := strings.Replace(strings.TrimLeft(message, "image me"), "image me", "", 1)
+	query := strings.Replace(strings.TrimLeft(message, "image"), "image", "", 1)
 
 	links, err := p.client.GetImageLinks(query)
 	if err != nil {
@@ -38,7 +38,12 @@ func (p *plugin) Do(req goslash.SlashCommandRequest) goslash.SlashCommandMessage
 	}
 
 	idx := int(p.rd.Int() % len(links))
-	return goslash.NewInChannelMessage(links[idx])
+	chMsg := goslash.NewInChannelMessage("")
+	chMsg.Attachments = append(chMsg.Attachments, goslash.Attachment{
+		Text:     query,
+		ImageURL: links[idx],
+	})
+	return chMsg
 }
 
 var _ plugins.Plugin = (*plugin)(nil)
